@@ -16,7 +16,7 @@ This script requires Python. Other than those included in the Python Standard Li
 
 ## Alternatives
 
-[Skopeo] is a great command line tool for container manipulation. It includes a `skopeo list-tags` achieves similar goals to this project.
+[Skopeo] is a great command line tool for container manipulation. It includes a `skopeo list-tags` command that achieves similar goals to this project.
 
 ## Contributing
 
