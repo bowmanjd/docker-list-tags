@@ -1,7 +1,9 @@
 *dud*
 
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
 .mypy_cache/
+*.egg-info/
+build/
+venv/
+.venv/
