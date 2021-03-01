@@ -1,4 +1,4 @@
-# latest-container-image
+# docker-list-tags
 
 Python script to get the name of the latest version of a container image from a Docker (or other) registry.
 
