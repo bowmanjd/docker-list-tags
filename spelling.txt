@@ -1,0 +1,11 @@
+Python
+TMP
+casefold
+charset
+gettempdir
+lru
+nosec
+pathlib
+repo
+tmp
+unlink
