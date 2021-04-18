@@ -2,7 +2,9 @@ Python
 TMP
 casefold
 charset
+doseq
 gettempdir
+jsonformat
 lru
 nosec
 pathlib

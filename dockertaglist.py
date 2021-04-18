@@ -6,6 +6,7 @@
 import json
 import typing
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from email.message import Message
@@ -34,19 +35,39 @@ class Response:
         return json.loads(self.body)
 
 
-def request(url: str, headers: dict = None, error_count: int = 0) -> Response:
+def request(
+    url: str,
+    data: dict = None,
+    headers: dict = None,
+    method: str = "get",
+    error_count: int = 0,
+) -> Response:
     """
     Perform HTTP request.
 
     Args:
         url: url to fetch
+        data: dict of keys/values to be form encoded
         headers: optional dict of request headers
+        method: HTTP method , such as GET or POST
+        error_count: optional current count of HTTP errors, to manage recursion
 
     Returns:
         A dict with headers, body, status code, and, if applicable, object
         rendered from JSON
     """
-    httprequest = urllib.request.Request(url, headers=headers or {})
+    method = method.casefold()
+    request_data = None
+    if data:
+        form_encoded = urllib.parse.urlencode(data, doseq=True, safe="/")
+        if method == "get":
+            url += f"?{form_encoded}"
+        else:
+            request_data = form_encoded.encode()
+
+    httprequest = urllib.request.Request(
+        url, data=request_data, headers=headers or {}, method=method
+    )
 
     try:
         with urllib.request.urlopen(httprequest) as httpresponse:
@@ -102,7 +123,7 @@ def registry_request(
     headers = {}
     if token:
         headers = {"Authorization": f"Bearer {token}"}
-    response = request(url, headers)
+    response = request(url, headers=headers)
     if response.status == 401:
         auth_info = www_authenticate(response.headers)
         url = (
